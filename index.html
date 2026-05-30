@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Inbox Aide SA - WhatsApp Inbox Audit Tool">
+<meta name="theme-color" content="#E8A06A">
+<link rel="manifest" href="data:application/json,{%22name%22:%22Inbox Aide Audit%22,%22short_name%22:%22Audit Tool%22,%22display%22:%22standalone%22,%22background_color%22:%22%23f8f6f2%22,%22theme_color%22:%22%23E8A06A%22,%22scope%22:%22/%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23E8A06A' width='192' height='192'/%3E%3Ctext x='50%' y='50%' font-size='80' fill='white' text-anchor='middle' dominant-baseline='central'%3EIA%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
+<title>Inbox Aide SA - Inbox Audit Tool</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f6f2;
+  margin: 0;
+  padding: 10px;
+  color: #2c2c2c;
+  line-height: 1.5;
+}
+
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border: 1px solid #f0ebe5;
+}
+
+.header-card {
+  background: linear-gradient(135deg, #f8f6f2 0%, #faf8f4 100%);
+  border: none;
+  text-align: center;
+  padding: 20px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+.header-card h1 {
+  margin: 0 0 3px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.header-card p {
+  margin: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8b7d6b;
+  font-weight: 600;
+}
+
+h3 {
+  margin: 0 0 14px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.section-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #E8A06A;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.research-field {
+  margin-bottom: 14px;
+}
+
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-bottom: 6px;
+}
+
+.field-hint {
+  display: block;
+  font-size: 11px;
+  color: #8b7d6b;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #e0d8ce;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  background: #fafaf8;
+  color: #2c2c2c;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #E8A06A;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(232, 160, 106, 0.1);
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.yes-no-group {
+  display: flex;
+  gap: 8px;
+}
+
+.yes-no-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e0d8ce;
+  background: #fafaf8;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.yes-no-btn.active {
+  background: #E8A06A;
+  color: white;
+  border-color: #E8A06A;
+}
+
+.issue-item {
+  padding: 12px;
+  background: #fafaf8;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 4px solid #e0d8ce;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.issue-item.active {
+  background: rgba(232, 160, 106, 0.1);
+  border-left-color: #E8A06A;
+}
+
+.issue-item input[type="checkbox"] {
+  margin-top: 3px;
+  cursor: pointer;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.issue-content {
+  flex: 1;
+}
+
+.issue-title {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2c2c2c;
+  margin-bottom: 3px;
+}
+
+.issue-desc {
+  display: block;
+  font-size: 12px;
+  color: #8b7d6b;
+  margin-bottom: 6px;
+}
+
+.severity-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.severity-critical {
+  background: #ffe0e0;
+  color: #d32f2f;
+}
+
+.severity-major {
+  background: #fff3cd;
+  color: #cc7700;
+}
+
+.severity-optimization {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background: #E8A06A;
+  color: white;
+}
+
+.btn-primary:active {
+  background: #d68a4f;
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: #e8e2d8;
+  color: #2c2c2c;
+}
+
+.btn-secondary:active {
+  background: #ddd5ca;
+}
+
+.report-box {
+  background: #fafaf8;
+  border-radius: 8px;
+  padding: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 12px;
+  color: #2c2c2c;
+  border: 1px solid #f0ebe5;
+  min-height: 180px;
+  font-family: 'Menlo', 'Monaco', monospace;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.report-empty {
+  color: #8b7d6b;
+  font-style: italic;
+}
+
+.info-box {
+  background: #fff8f0;
+  border-left: 3px solid #E8A06A;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6b5d4f;
+}
+
+.info-box strong {
+  color: #E8A06A;
+}
+
+.no-issues-detected {
+  background: #f3ede5;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #6b5d4f;
+  text-align: center;
+  margin: 10px 0;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+  
+  .card {
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  
+  h3 {
+    font-size: 14px;
+  }
+  
+  .report-box {
+    font-size: 11px;
+    padding: 10px;
+  }
+  
+  button {
+    padding: 12px;
+    font-size: 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<div class="card header-card">
+  <img class="logo" src="https://i.postimg.cc/vHpyDxBL/Photoroom-20260226-075949050.png" alt="Inbox Aide SA">
+  <h1>Inbox Audit</h1>
+  <p>Never Lose a Lead Again</p>
+</div>
+
+<!-- CLIENT INFO -->
+<div class="card">
+  <span class="section-label">Step 1: Client Details</span>
+  <div class="research-field">
+    <label class="field-label">Client Name</label>
+    <input id="clientName" placeholder="Name" type="text">
+  </div>
+  <div class="research-field">
+    <label class="field-label">Business Name</label>
+    <input id="businessName" placeholder="Business" type="text">
+  </div>
+  <div class="research-field">
+    <label class="field-label">Industry</label>
+    <input id="industry" placeholder="E-commerce, Services, Coaching, etc." type="text">
+  </div>
+</div>
+
+<!-- RESEARCH SECTION -->
+<div class="card">
+  <span class="section-label">Step 2: Do Your Audit</span>
+  <h3>Response Behavior</h3>
+  
+  <div class="research-field">
+    <label class="field-label">How fast do they respond?</label>
+    <span class="field-hint">Example: "2-4 hours", "next morning", "varies 1-24hrs"</span>
+    <input id="responseTime" placeholder="e.g., 2-4 hours" type="text" onchange="detectIssues()">
+  </div>
+
+  <div class="research-field">
+    <label class="field-label">Do they have unanswered messages?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'unanswered', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'unanswered', 'no')">No</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 16px;">Message Quality</h3>
+
+  <div class="research-field">
+    <label class="field-label">Do they have a welcome message?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'welcome', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'welcome', 'no')">No</button>
+    </div>
+  </div>
+
+  <div class="research-field">
+    <label class="field-label">Message clarity and professionalism</label>
+    <span class="field-hint">Clear and concise? Or walls of text? Typos?</span>
+    <textarea id="clarity" placeholder="e.g., 'Clear and professional', 'Hard to follow, multiple long paragraphs'" onchange="detectIssues()"></textarea>
+  </div>
+
+  <h3 style="margin-top: 16px;">Customer Engagement</h3>
+
+  <div class="research-field">
+    <label class="field-label">Do they ask discovery questions?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'discovery', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'discovery', 'no')">No</button>
+    </div>
+  </div>
+
+  <div class="research-field">
+    <label class="field-label">Do they have a clear CTA (call-to-action)?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'cta', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'cta', 'no')">No</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 16px;">Systems & Automation</h3>
+
+  <div class="research-field">
+    <label class="field-label">Do they have quick replies set up?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'quickreplies', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'quickreplies', 'no')">No</button>
+    </div>
+  </div>
+
+  <div class="research-field">
+    <label class="field-label">Do they share a catalogue/price list?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'catalogue', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'catalogue', 'no')">No</button>
+    </div>
+  </div>
+
+  <div class="research-field">
+    <label class="field-label">Do they have an away message set?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'away', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'away', 'no')">No</button>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 16px;">Lead Management</h3>
+
+  <div class="research-field">
+    <label class="field-label">Do they follow up with no-response leads?</label>
+    <div class="yes-no-group">
+      <button class="yes-no-btn" onclick="setYesNo(this, 'followup', 'yes')">Yes</button>
+      <button class="yes-no-btn" onclick="setYesNo(this, 'followup', 'no')">No</button>
+    </div>
+  </div>
+
+  <div class="research-field">
+    <label class="field-label">Overall inbox observations</label>
+    <span class="field-hint">Anything else that stands out?</span>
+    <textarea id="observations" placeholder="Any other observations about their inbox management..."></textarea>
+  </div>
+</div>
+
+<!-- AUTO-DETECTED ISSUES -->
+<div class="card">
+  <span class="section-label">Step 3: Issues Auto-Detected</span>
+  <h3>Review & Include in Audit</h3>
+  <div id="detectedIssues"></div>
+</div>
+
+<!-- CLIENT NOTES -->
+<div class="card">
+  <span class="section-label">Step 4: Additional Notes</span>
+  <textarea id="notes" placeholder="Specific feedback or observations for this client...&#10;&#10;Example: 'Strong at following up, but needs better initial response time'&#10;&#10;Example: 'Perfect opportunity to add catalogue—quick 10 min setup'"></textarea>
+</div>
+
+<!-- BUTTONS -->
+<div class="card">
+  <button class="btn-primary" onclick="generateReport()">📝 Generate WhatsApp Audit</button>
+  <button class="btn-secondary" onclick="copyReport()">📋 Copy Message</button>
+</div>
+
+<!-- REPORT OUTPUT -->
+<div class="card">
+  <h3>Your Audit Message</h3>
+  <div id="report" class="report-box report-empty">Your WhatsApp audit will appear here...</div>
+  <div class="info-box">
+    <strong>✓ Ready to send:</strong> Copy above and paste in WhatsApp. Professional, specific, actionable.
+  </div>
+</div>
+
+</div>
+
+<script>
+const issueDatabase = {
+  'Slow Responses': {
+    desc: 'Takes hours or days to reply. Customers move to competitors.',
+    severity: 'critical'
+  },
+  'Missed Enquiries': {
+    desc: 'Messages go unanswered. Lost opportunities.',
+    severity: 'critical'
+  },
+  'No Welcome Message': {
+    desc: 'First impression is cold and impersonal.',
+    severity: 'major'
+  },
+  'Walls of Text': {
+    desc: 'Long paragraphs overwhelm customers.',
+    severity: 'major'
+  },
+  'Unclear Messaging': {
+    desc: 'Customers don\'t understand products, pricing, or next steps.',
+    severity: 'critical'
+  },
+  'No Clear CTA': {
+    desc: 'Customer doesn\'t know what to do next.',
+    severity: 'critical'
+  },
+  'No Discovery Questions': {
+    desc: 'Doesn\'t understand customer needs. Wrong fits move forward.',
+    severity: 'critical'
+  },
+  'No Follow-Up System': {
+    desc: 'Leads go cold. No second touch.',
+    severity: 'critical'
+  },
+  'No Quick Replies': {
+    desc: 'Manual responses = slow. Common questions aren\'t templated.',
+    severity: 'optimization'
+  },
+  'No Catalogue': {
+    desc: 'Customer asks "what do you offer?" and gets a long message.',
+    severity: 'major'
+  },
+  'No Away Message': {
+    desc: 'Customers don\'t know when they\'ll get a response.',
+    severity: 'optimization'
+  }
+};
+
+const recommendations = {
+  quickWins: [
+    { name: 'Set Up Quick Replies', desc: 'Pre-written answers to common questions. Instant responses. 20 mins.' },
+    { name: 'Create Welcome Message', desc: 'Auto-greet new customers. Professional first impression.' },
+    { name: 'Optimize Profile', desc: 'Add hours, bio, category. Look legit and trustworthy.' },
+    { name: 'Write Response Expectations', desc: 'Tell customers when to expect a reply if you\'re busy.' },
+    { name: 'Create Simple FAQ', desc: '5-10 common questions + answers. Reference in conversations.' }
+  ],
+  strategic: [
+    { name: 'Messaging Sequence', desc: 'Welcome → Discover → Show Solution → CTA → Follow-up. Proven structure.' },
+    { name: 'Product Catalogue', desc: 'Clear pricing/offerings upfront. Filters unqualified leads.' },
+    { name: 'Qualification Framework', desc: 'Ask key questions: budget, timeline, pain point. Only pursue qualified leads.' },
+    { name: 'Follow-Up System', desc: '24-48hr follow-up on no-response leads. Most sales need 2+ touches.' },
+    { name: 'Objection Scripts', desc: 'Write responses for common objections (price, timing, need).' }
+  ],
+  advanced: [
+    { name: 'Conversation Labels', desc: 'Tag chats: Hot Lead, Following Up, Qualified. Quick visibility.' },
+    { name: 'Broadcast Campaigns', desc: 'Send offers to past customers. Re-engage cold leads.' },
+    { name: 'Testimonial Collection', desc: 'Gather case studies. Social proof builds trust fast.' },
+    { name: 'Pipeline Tracking', desc: 'Spreadsheet tracking: Stage, last contact, next action.' }
+  ]
+};
+
+let detectedIssues = [];
+let selectedIssues = [];
+let yesNoAnswers = {};
+
+function setYesNo(btn, key, value) {
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  yesNoAnswers[key] = value;
+  detectIssues();
+  saveFormData();
+}
+
+function detectIssues() {
+  detectedIssues = [];
+  selectedIssues = [];
+
+  const respTime = document.getElementById('responseTime').value.toLowerCase();
+  if (respTime.includes('4+') || respTime.includes('8') || respTime.includes('24') || respTime.includes('day')) {
+    detectedIssues.push('Slow Responses');
+  }
+
+  if (yesNoAnswers.unanswered === 'yes') {
+    detectedIssues.push('Missed Enquiries');
+  }
+
+  if (yesNoAnswers.welcome === 'no') {
+    detectedIssues.push('No Welcome Message');
+  }
+
+  const clarity = document.getElementById('clarity').value.toLowerCase();
+  if (clarity.includes('wall') || clarity.includes('long') || clarity.includes('hard') || clarity.includes('confuse')) {
+    detectedIssues.push('Walls of Text');
+  }
+  if (clarity.includes('unclear') || clarity.includes('confus') || clarity.includes('hard')) {
+    detectedIssues.push('Unclear Messaging');
+  }
+
+  if (yesNoAnswers.discovery === 'no') {
+    detectedIssues.push('No Discovery Questions');
+  }
+
+  if (yesNoAnswers.cta === 'no') {
+    detectedIssues.push('No Clear CTA');
+  }
+
+  if (yesNoAnswers.catalogue === 'no') {
+    detectedIssues.push('No Catalogue');
+  }
+
+  if (yesNoAnswers.followup === 'no') {
+    detectedIssues.push('No Follow-Up System');
+  }
+
+  if (yesNoAnswers.quickreplies === 'no') {
+    detectedIssues.push('No Quick Replies');
+  }
+
+  if (yesNoAnswers.away === 'no') {
+    detectedIssues.push('No Away Message');
+  }
+
+  renderDetectedIssues();
+}
+
+function renderDetectedIssues() {
+  const container = document.getElementById('detectedIssues');
+  
+  if (detectedIssues.length === 0) {
+    container.innerHTML = '<div class="no-issues-detected">✓ No major issues detected. Great inbox!</div>';
+    return;
+  }
+
+  container.innerHTML = detectedIssues.map(issue => {
+    const data = issueDatabase[issue] || { desc: '', severity: 'major' };
+    return `
+      <div class="issue-item" onclick="toggleIssueSelection(this, '${issue}')">
+        <input type="checkbox" onchange="this.parentElement.classList.toggle('active')">
+        <div class="issue-content">
+          <span class="issue-title">${issue}</span>
+          <span class="issue-desc">${data.desc}</span>
+          <span class="severity-badge severity-${data.severity}">${data.severity}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleIssueSelection(el, issue) {
+  const checkbox = el.querySelector('input[type="checkbox"]');
+  checkbox.checked = !checkbox.checked;
+  el.classList.toggle('active');
+  
+  if (checkbox.checked) {
+    if (!selectedIssues.includes(issue)) selectedIssues.push(issue);
+  } else {
+    selectedIssues = selectedIssues.filter(i => i !== issue);
+  }
+  saveFormData();
+}
+
+function generateReport() {
+  const client = document.getElementById('clientName').value || 'there';
+  const business = document.getElementById('businessName').value || 'your business';
+  const industry = document.getElementById('industry').value || 'your industry';
+  const notes = document.getElementById('notes').value;
+
+  if (selectedIssues.length === 0 && detectedIssues.length > 0) {
+    alert('Select at least one issue to include in the audit.');
+    return;
+  }
+
+  let selectedRecs = [];
+  if (selectedIssues.includes('Slow Responses') || selectedIssues.includes('Missed Enquiries')) {
+    selectedRecs.push(recommendations.quickWins[0]);
+  }
+  if (selectedIssues.includes('No Welcome Message')) {
+    selectedRecs.push(recommendations.quickWins[1]);
+  }
+  if (selectedIssues.includes('Walls of Text') || selectedIssues.includes('Unclear Messaging')) {
+    selectedRecs.push(recommendations.strategic[0]);
+  }
+  if (selectedIssues.includes('No Discovery Questions')) {
+    selectedRecs.push(recommendations.strategic[2]);
+  }
+  if (selectedIssues.includes('No Clear CTA')) {
+    selectedRecs.push(recommendations.strategic[0]);
+  }
+  if (selectedIssues.includes('No Catalogue')) {
+    selectedRecs.push(recommendations.strategic[1]);
+  }
+  if (selectedIssues.includes('No Follow-Up System')) {
+    selectedRecs.push(recommendations.strategic[3]);
+  }
+  if (selectedIssues.includes('No Quick Replies')) {
+    selectedRecs.push(recommendations.quickWins[0]);
+  }
+
+  selectedRecs = [...new Set(selectedRecs.map(r => r.name))].map(name => recommendations.quickWins.concat(recommendations.strategic, recommendations.advanced).find(r => r.name === name));
+
+  const issueText = selectedIssues.map(issue => {
+    const data = issueDatabase[issue] || { desc: '' };
+    return `• ${issue}\n  ${data.desc}`;
+  }).join('\n\n');
+
+  const recText = selectedRecs.slice(0, 5).map(r => `• ${r.name}\n  ${r.desc}`).join('\n\n');
+
+  const severity = selectedIssues.some(i => issueDatabase[i]?.severity === 'critical') ? 'critical' : 'major';
+  const urgency = severity === 'critical' 
+    ? 'These aren\'t small tweaks—they\'re costing you sales RIGHT NOW.'
+    : 'Small changes could make a big difference to your bottom line.';
+
+  const report = `Hi ${client}! 👋
+
+I reviewed the WhatsApp inbox for ${business} and spotted some opportunities.
+
+📊 WHAT I FOUND:
+
+${issueText}
+
+${urgency}
+
+💡 MY RECOMMENDATION:
+
+Start here (this week):
+
+${recText}
+
+${notes ? `\n📝 SPECIFIC NOTES FOR ${business.toUpperCase()}:\n\n${notes}` : ''}
+
+This is the revenue leakage point. Fix these and you'll see:
+✓ Faster response time
+✓ Clearer customer journey
+✓ More conversions
+✓ Less stress managing inbox
+
+Most of these take 30-60 mins to implement. Big impact.
+
+Ready to set it up? Let me know.
+
+Cheers,
+Inbox Aide SA
+
+P.S. — 20-40% of potential sales are lost because businesses either respond too slow or aren't clear enough. You're already ahead by getting this audit. 💪`;
+
+  document.getElementById('report').textContent = report;
+  document.getElementById('report').classList.remove('report-empty');
+  saveFormData();
+}
+
+function copyReport() {
+  const text = document.getElementById('report').textContent;
+  if (text.includes('Your WhatsApp audit')) {
+    alert('Generate an audit first!');
+    return;
+  }
+  
+  // Try modern clipboard API first
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('✓ Copied! Paste in WhatsApp now.');
+    }).catch(() => {
+      fallbackCopy(text);
+    });
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  // Create temporary textarea
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  
+  try {
+    document.execCommand('copy');
+    alert('✓ Copied! Paste in WhatsApp now.');
+  } catch (err) {
+    alert('Copy failed. Tap the message box, select text, then copy manually.');
+  }
+  
+  document.body.removeChild(textarea);
+}
+
+function saveFormData() {
+  const data = {
+    clientName: document.getElementById('clientName').value,
+    businessName: document.getElementById('businessName').value,
+    industry: document.getElementById('industry').value,
+    responseTime: document.getElementById('responseTime').value,
+    clarity: document.getElementById('clarity').value,
+    observations: document.getElementById('observations').value,
+    notes: document.getElementById('notes').value,
+    yesNoAnswers: yesNoAnswers,
+    selectedIssues: selectedIssues,
+    report: document.getElementById('report').textContent
+  };
+  localStorage.setItem('auditData', JSON.stringify(data));
+}
+
+function loadFormData() {
+  const saved = localStorage.getItem('auditData');
+  if (saved) {
+    const data = JSON.parse(saved);
+    document.getElementById('clientName').value = data.clientName || '';
+    document.getElementById('businessName').value = data.businessName || '';
+    document.getElementById('industry').value = data.industry || '';
+    document.getElementById('responseTime').value = data.responseTime || '';
+    document.getElementById('clarity').value = data.clarity || '';
+    document.getElementById('observations').value = data.observations || '';
+    document.getElementById('notes').value = data.notes || '';
+    yesNoAnswers = data.yesNoAnswers || {};
+    
+    if (data.report && !data.report.includes('Your WhatsApp audit')) {
+      document.getElementById('report').textContent = data.report;
+      document.getElementById('report').classList.remove('report-empty');
+    }
+    
+    detectIssues();
+  }
+}
+
+document.addEventListener('input', saveFormData);
+document.addEventListener('change', saveFormData);
+window.addEventListener('load', loadFormData);
+</script>
+
+</body>
+</html>
