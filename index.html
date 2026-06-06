@@ -1,819 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Inbox Aide SA - WhatsApp Inbox Audit Tool">
-<meta name="theme-color" content="#E8A06A">
-<link rel="manifest" href="data:application/json,{%22name%22:%22Inbox Aide Audit%22,%22short_name%22:%22Audit Tool%22,%22display%22:%22standalone%22,%22background_color%22:%22%23f8f6f2%22,%22theme_color%22:%22%23E8A06A%22,%22scope%22:%22/%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23E8A06A' width='192' height='192'/%3E%3Ctext x='50%' y='50%' font-size='80' fill='white' text-anchor='middle' dominant-baseline='central'%3EIA%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
-<title>Inbox Aide SA - Inbox Audit Tool</title>
-<style>
-* { box-sizing: border-box; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f8f6f2;
-  margin: 0;
-  padding: 10px;
-  color: #2c2c2c;
-  line-height: 1.5;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox Aide SA | Professional Inbox Management</title>
+    <style>
+        :root {
+            --brand-olive: #4E684E;
+            --brand-terracotta: #D98353;
+            --bg-cream: #FAF7F0;
+            --text-navy: #1A2530;
+            --card-bg: #FFFFFF;
+            --border-color: #E2DBD0;
+            --text-muted: #5A6A7A;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background-color: var(--bg-cream); color: var(--text-navy); line-height: 1.6; padding: 0; }
+        .wrapper { max-width: 480px; margin: 0 auto; background: var(--bg-cream); min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.03); }
+        nav { display: flex; align-items: center; padding: 24px; border-bottom: 1px solid var(--border-color); background: var(--bg-cream); }
+        .logo-box { width: 45px; height: 45px; border-radius: 10px; margin-right: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-titles { display: flex; flex-direction: column; }
+        .brand-name { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.4px; color: var(--text-navy); line-height: 1.2; }
+        .brand-tagline { font-size: 0.75rem; color: var(--brand-olive); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        section { padding: 48px 24px; border-bottom: 1px solid var(--border-color); }
+        h1 { font-size: 2.2rem; line-height: 1.15; margin-bottom: 18px; font-weight: 800; letter-spacing: -0.5px; }
+        h2 { font-size: 1.65rem; line-height: 1.25; margin-bottom: 24px; font-weight: 700; letter-spacing: -0.3px; }
+        .section-intro { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 28px; }
+        .btn { display: block; width: 100%; padding: 18px; text-align: center; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.05rem; transition: transform 0.2s, background 0.2s; border: none; cursor: pointer; }
+        .btn-navy { background-color: var(--text-navy); color: #FFFFFF; }
+        .btn-terracotta { background-color: var(--brand-terracotta); color: #FFFFFF; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; margin-bottom: 18px; }
+        .card h3 { font-size: 1.2rem; margin-bottom: 8px; font-weight: 700; color: var(--text-navy); }
+        .card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
+        .badge { display: inline-block; background: #EAF0EA; color: var(--brand-olive); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+        .pricing-card { border: 2px solid var(--brand-olive); background: var(--card-bg); padding: 32px 24px; border-radius: 16px; position: relative; }
+        .price-tag { font-size: 2.8rem; font-weight: 900; color: var(--text-navy); line-height: 1; }
+        .price-period { font-size: 1.05rem; color: var(--brand-olive); font-weight: 700; margin-bottom: 16px; }
+        .price-subtext { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-color); }
+        .checklist { list-style: none; margin-bottom: 28px; }
+        .checklist li { font-size: 0.95rem; margin-bottom: 14px; display: flex; align-items: flex-start; color: var(--text-navy); }
+        .checklist-bullet { color: var(--brand-olive); font-weight: bold; margin-right: 10px; font-size: 1.1rem; }
+        .product-section { background: #111822; color: #FFFFFF; }
+        .product-section h2 { color: #FFFFFF; }
+        .product-section .section-intro { color: #94A3B8; }
+        .product-image-container { width: 100%; max-width: 290px; margin: 32px auto; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); overflow: hidden; border: 1px solid #2D3A4A; }
+        .product-display-img { width: 100%; display: block; height: auto; }
+        .audit-box { border: 1px solid var(--border-color); border-left: 5px solid var(--brand-terracotta); border-radius: 12px; background: #FFFFFF; padding: 32px 24px; }
+        .step-num { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); margin-bottom: 4px; letter-spacing: 1px; }
+        footer { text-align: center; padding: 48px 24px; font-size: 0.85rem; color: var(--text-muted); background: var(--bg-cream); border-top: 1px solid var(--border-color); }
 
-.wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-}
+        /* ── Audit Form Styles ── */
+        .audit-form { margin-top: 8px; }
+        .audit-form input {
+            display: block;
+            width: 100%;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-navy);
+            background: var(--bg-cream);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .audit-form input:focus { border-color: var(--brand-terracotta); }
+        .audit-form input::placeholder { color: #aaa; }
 
-.card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  border: 1px solid #f0ebe5;
-}
+        /* Slot counter */
+        .slot-box {
+            background: #fff;
+            border: 1.5px solid var(--brand-terracotta);
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+            margin-bottom: 22px;
+        }
+        .slot-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px; }
+        .slot-number { font-size: 3rem; font-weight: 900; color: var(--brand-terracotta); line-height: 1; }
+        .slot-sub { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; }
 
-.header-card {
-  background: linear-gradient(135deg, #f8f6f2 0%, #faf8f4 100%);
-  border: none;
-  text-align: center;
-  padding: 20px 16px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+        .form-note { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 14px; }
 
-.logo {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 10px;
-  display: block;
-}
-
-.header-card h1 {
-  margin: 0 0 3px 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: #2c2c2c;
-}
-
-.header-card p {
-  margin: 0;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #8b7d6b;
-  font-weight: 600;
-}
-
-h3 {
-  margin: 0 0 14px 0;
-  font-size: 15px;
-  font-weight: 700;
-  color: #2c2c2c;
-}
-
-.section-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #E8A06A;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 10px;
-}
-
-.research-field {
-  margin-bottom: 14px;
-}
-
-.field-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2c2c2c;
-  margin-bottom: 6px;
-}
-
-.field-hint {
-  display: block;
-  font-size: 11px;
-  color: #8b7d6b;
-  margin-bottom: 6px;
-  font-weight: 400;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid #e0d8ce;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 14px;
-  background: #fafaf8;
-  color: #2c2c2c;
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: #E8A06A;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(232, 160, 106, 0.1);
-}
-
-textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.yes-no-group {
-  display: flex;
-  gap: 8px;
-}
-
-.yes-no-btn {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #e0d8ce;
-  background: #fafaf8;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.2s;
-}
-
-.yes-no-btn.active {
-  background: #E8A06A;
-  color: white;
-  border-color: #E8A06A;
-}
-
-.issue-item {
-  padding: 12px;
-  background: #fafaf8;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  border-left: 4px solid #e0d8ce;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.issue-item.active {
-  background: rgba(232, 160, 106, 0.1);
-  border-left-color: #E8A06A;
-}
-
-.issue-item input[type="checkbox"] {
-  margin-top: 3px;
-  cursor: pointer;
-  width: auto;
-  flex-shrink: 0;
-}
-
-.issue-content {
-  flex: 1;
-}
-
-.issue-title {
-  display: block;
-  font-weight: 600;
-  font-size: 13px;
-  color: #2c2c2c;
-  margin-bottom: 3px;
-}
-
-.issue-desc {
-  display: block;
-  font-size: 12px;
-  color: #8b7d6b;
-  margin-bottom: 6px;
-}
-
-.severity-badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.severity-critical {
-  background: #ffe0e0;
-  color: #d32f2f;
-}
-
-.severity-major {
-  background: #fff3cd;
-  color: #cc7700;
-}
-
-.severity-optimization {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-button {
-  width: 100%;
-  padding: 13px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.2s;
-  margin-top: 10px;
-}
-
-.btn-primary {
-  background: #E8A06A;
-  color: white;
-}
-
-.btn-primary:active {
-  background: #d68a4f;
-  transform: scale(0.98);
-}
-
-.btn-secondary {
-  background: #e8e2d8;
-  color: #2c2c2c;
-}
-
-.btn-secondary:active {
-  background: #ddd5ca;
-}
-
-.report-box {
-  background: #fafaf8;
-  border-radius: 8px;
-  padding: 14px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-size: 12px;
-  color: #2c2c2c;
-  border: 1px solid #f0ebe5;
-  min-height: 180px;
-  font-family: 'Menlo', 'Monaco', monospace;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.report-empty {
-  color: #8b7d6b;
-  font-style: italic;
-}
-
-.info-box {
-  background: #fff8f0;
-  border-left: 3px solid #E8A06A;
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 10px;
-  font-size: 12px;
-  color: #6b5d4f;
-}
-
-.info-box strong {
-  color: #E8A06A;
-}
-
-.no-issues-detected {
-  background: #f3ede5;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  color: #6b5d4f;
-  text-align: center;
-  margin: 10px 0;
-}
-
-@media (max-width: 480px) {
-  body {
-    padding: 8px;
-  }
-  
-  .card {
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-  
-  h3 {
-    font-size: 14px;
-  }
-  
-  .report-box {
-    font-size: 11px;
-    padding: 10px;
-  }
-  
-  button {
-    padding: 12px;
-    font-size: 12px;
-  }
-}
-</style>
+        /* Success / error messages */
+        .form-success {
+            display: none;
+            background: #eaf0ea;
+            border: 1px solid var(--brand-olive);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: var(--brand-olive);
+            font-weight: 600;
+            margin-top: 16px;
+            font-size: 0.95rem;
+        }
+        .form-error {
+            display: none;
+            background: #fdf0ec;
+            border: 1px solid var(--brand-terracotta);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            color: #b94a1a;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+    </style>
 </head>
 <body>
+    <div class="wrapper">
 
-<div class="wrapper">
+        <nav>
+            <div class="logo-box">
+                <img src="https://i.postimg.cc/6pr85YVT/Photoroom-20260226-075949050.png" alt="Inbox Aide SA Logo" class="logo-img">
+            </div>
+            <div class="brand-titles">
+                <span class="brand-name">Inbox Aide SA</span>
+                <span class="brand-tagline">Premium Business Support</span>
+            </div>
+        </nav>
 
-<div class="card header-card">
-  <img class="logo" src="https://i.postimg.cc/vHpyDxBL/Photoroom-20260226-075949050.png" alt="Inbox Aide SA">
-  <h1>Inbox Audit</h1>
-  <p>Never Lose a Lead Again</p>
-</div>
+        <section>
+            <h1>Never Lose a Lead Again. We Manage Your Inboxes While You Scale.</h1>
+            <p class="section-intro">Stop letting ready-to-buy clients slip through the cracks. We provide high-end, reliable social media comment and inquiry management built specifically for busy South African entrepreneurs.</p>
+            <a href="https://form.jotform.com/261363512824050" class="btn btn-navy">Apply for Inbox Management</a>
+        </section>
 
-<!-- CLIENT INFO -->
-<div class="card">
-  <span class="section-label">Step 1: Client Details</span>
-  <div class="research-field">
-    <label class="field-label">Client Name</label>
-    <input id="clientName" placeholder="Name" type="text">
-  </div>
-  <div class="research-field">
-    <label class="field-label">Business Name</label>
-    <input id="businessName" placeholder="Business" type="text">
-  </div>
-  <div class="research-field">
-    <label class="field-label">Industry</label>
-    <input id="industry" placeholder="E-commerce, Services, Coaching, etc." type="text">
-  </div>
-</div>
+        <section style="background: #F3EFE6;">
+            <h2>Why South African Businesses Trust Us</h2>
+            <p class="section-intro">Most virtual assistants check messages once a day. We understand that in the digital space, a 15-minute delay means a lost sale. Here is how we safeguard your revenue:</p>
+            <div class="card">
+                <span class="badge">Speed</span>
+                <h3>Lightning-Fast Conversion</h3>
+                <p>We perform hourly message sweeps during operational hours. Curious commenters are converted into paying clients before they lose interest or look elsewhere.</p>
+            </div>
+            <div class="card">
+                <span class="badge">Expertise</span>
+                <h3>Intermediate Level Strategies</h3>
+                <p>We don't just paste generic text. We learn your brand's unique voice, handling complex FAQs, sorting real intent from noise, and gracefully escalating deep issues directly to you.</p>
+            </div>
+            <div class="card">
+                <span class="badge">Retention</span>
+                <h3>Proactive Follow-Ups</h3>
+                <p>If a client inquires about pricing but drops off, we follow up strategically within your protocols to close the loop and secure the booking.</p>
+            </div>
+        </section>
 
-<!-- RESEARCH SECTION -->
-<div class="card">
-  <span class="section-label">Step 2: Do Your Audit</span>
-  <h3>Response Behavior</h3>
-  
-  <div class="research-field">
-    <label class="field-label">How fast do they respond?</label>
-    <span class="field-hint">Example: "2-4 hours", "next morning", "varies 1-24hrs"</span>
-    <input id="responseTime" placeholder="e.g., 2-4 hours" type="text" onchange="detectIssues()">
-  </div>
+        <section>
+            <h2>Transparent Starter Pricing</h2>
+            <p class="section-intro">No hidden fees, no long contracts. Premium, elite inbox care designed to pay for itself by saving your sales.</p>
+            <div class="pricing-card">
+                <div class="badge" style="background: var(--brand-olive); color: white;">Starter Tier Care</div>
+                <div class="price-tag">R450</div>
+                <div class="price-period">per week</div>
+                <div class="price-subtext">Perfect for established product or service providers. Fees are paid upfront via secure EFT or PayShap.</div>
+                <ul class="checklist">
+                    <li><span class="checklist-bullet">✓</span> Monday – Friday, 09:00 – 17:00 active coverage</li>
+                    <li><span class="checklist-bullet">✓</span> Intensive hourly check sweeps for rapid replies</li>
+                    <li><span class="checklist-bullet">✓</span> Direct comment engagement & conversation steering</li>
+                    <li><span class="checklist-bullet">✓</span> Detailed filtering to capture and flag hot sales leads</li>
+                    <li><span class="checklist-bullet">✓</span> Custom Facebook DM and WhatsApp management combined</li>
+                    <li><span class="checklist-bullet">✓</span> Weekly summary sheet outlining lead volume and trends</li>
+                </ul>
+                <a href="https://form.jotform.com/261363512824050" class="btn btn-navy">Apply for Inbox Management</a>
+            </div>
+        </section>
 
-  <div class="research-field">
-    <label class="field-label">Do they have unanswered messages?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'unanswered', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'unanswered', 'no')">No</button>
+        <section>
+            <h2>Your Streamlined Onboarding</h2>
+            <div class="card">
+                <div class="step-num">Step 01</div>
+                <h3>Secure Intake</h3>
+                <p>Click get started, complete our comprehensive Jotform questionnaire, and safely hand over your common response frameworks.</p>
+            </div>
+            <div class="card">
+                <div class="step-num">Step 02</div>
+                <h3>Active Deployment</h3>
+                <p>Our team steps into your accounts during official operational hours, filtering public noise and handling inquiries flawlessly.</p>
+            </div>
+            <div class="card">
+                <div class="step-num">Step 03</div>
+                <h3>Uncapped Freedom</h3>
+                <p>You step completely away from the notification trap, focusing entirely on delivery while your backend system closes sales.</p>
+            </div>
+        </section>
+
+        <!-- ── AUDIT SECTION ── -->
+        <section>
+            <div class="audit-box">
+                <h2 style="margin-bottom: 12px; color: var(--text-navy);">Not sure where you're losing money?</h2>
+                <p style="margin-bottom: 24px; font-size: 0.95rem;">Let us perform a comprehensive, complimentary review of your public response times and engagement gaps. We will pinpoint exactly where clients are dropping off.</p>
+
+                <div style="background: var(--bg-cream); border-radius: 8px; padding: 20px; margin-bottom: 24px; font-size: 0.9rem; border: 1px solid var(--border-color); text-align: left;">
+                    <p style="font-weight: 700; color: var(--text-navy); margin-bottom: 12px; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">📋 How Your Quick Audit Works:</p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 18px;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;">
+                            <span style="color: var(--brand-terracotta); margin-right: 8px; font-weight: bold;">1.</span>
+                            <span style="color: var(--text-navy); line-height: 1.4;"><strong>Choose Your Method:</strong> Simply send over a link to your active business Facebook/Instagram page, OR upload 2 to 3 screenshots of recent customer chats.</span>
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;">
+                            <span style="color: var(--brand-terracotta); margin-right: 8px; font-weight: bold;">2.</span>
+                            <span style="color: var(--text-navy); line-height: 1.4;"><strong>Expert Overview:</strong> We evaluate your public response times, message layout clarity, and initial engagement flow from a true buyer's perspective.</span>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; align-items: flex-start;">
+                            <span style="color: var(--brand-terracotta); margin-right: 8px; font-weight: bold;">3.</span>
+                            <span style="color: var(--text-navy); line-height: 1.4;"><strong>What You Receive:</strong> A personalized, actionable feedback checklist pointing out exact gaps and structural improvements to help secure more sales.</span>
+                        </li>
+                    </ul>
+                    <p style="font-weight: 700; color: var(--brand-olive); margin-bottom: 6px; display: flex; align-items: center;"><span style="margin-right: 6px;">🔒</span> 100% Privacy Guarded:</p>
+                    <p style="color: var(--text-muted); line-height: 1.4; font-size: 0.85rem; padding-left: 4px;">Your business files are safe. Please feel free to scratch out, blur, or block out any client names or phone numbers on your screenshots. We only analyze response structures!</p>
+                </div>
+
+                <!-- SLOT COUNTER -->
+                <div class="slot-box">
+                    <div class="slot-label">Available This Week</div>
+                    <div class="slot-number" id="slotCount">3</div>
+                    <div class="slot-sub">out of 3 slots</div>
+                </div>
+
+                <!-- WORKING FORMSPREE FORM -->
+                <form
+                    action="https://formspree.io/f/mreveyyj"
+                    method="POST"
+                    class="audit-form"
+                    id="auditForm"
+                >
+                    <!-- Hidden field so you know which form this came from -->
+                    <input type="hidden" name="form_source" value="Inbox Aide SA — Free Audit">
+
+                    <input
+                        type="text"
+                        name="business_name"
+                        placeholder="Business Name"
+                        required
+                    />
+                    <input
+                        type="tel"
+                        name="whatsapp_number"
+                        placeholder="WhatsApp Number (+27 81 234 5678)"
+                        required
+                    />
+                    <button type="submit" class="btn btn-terracotta">Reserve Your Slot</button>
+                </form>
+
+                <div class="form-success" id="formSuccess">
+                    ✅ Slot reserved! We'll contact you on WhatsApp within 24 hours with your free audit.
+                </div>
+                <div class="form-error" id="formError">
+                    Something went wrong. Please try again or WhatsApp us directly on 076 826 0594.
+                </div>
+
+                <p class="form-note">💬 We'll contact you via WhatsApp within 24 hours with your personalized audit.</p>
+            </div>
+        </section>
+
+        <section class="product-section">
+            <h2>The Digital Storefront</h2>
+            <p class="section-intro">Prefer to handle things yourself but want a bulletproof framework? Secure our highest-selling professional template guide.</p>
+            <div class="product-image-container">
+                <img src="https://i.postimg.cc/KvzzymjH/Screenshot-20260518-101704-Chrome.jpg" alt="WhatsApp Response Toolkit Cover" class="product-display-img">
+            </div>
+            <p style="font-size: 0.95rem; text-align: center; margin-bottom: 24px; color: #E2E8F0;">Stop staring at a blank screen wondering how to word your replies. Instantly copy-and-paste high-converting templates covering payments, greetings, and customer retention parameters.</p>
+            <a href="https://selar.co/237dq65411" class="btn btn-terracotta">Buy Toolkit Now</a>
+        </section>
+
+        <section style="text-align: center; background: #F3EFE6;">
+            <h2>Take Back Your Time Today</h2>
+            <p class="section-intro" style="margin-bottom: 24px;">Ready to exit the notification cycle and scale your business securely?</p>
+            <a href="https://form.jotform.com/261363512824050" class="btn btn-navy">Apply for Inbox Management</a>
+        </section>
+
+        <footer>
+            <p><strong>Inbox Aide SA</strong></p>
+            <p>Operating Hours: Monday – Friday | 09:00 – 17:00</p>
+            <p style="margin-top: 16px; opacity: 0.5;">© 2026. Built seamlessly for mobile-first workflows.</p>
+        </footer>
+
     </div>
-  </div>
 
-  <h3 style="margin-top: 16px;">Message Quality</h3>
-
-  <div class="research-field">
-    <label class="field-label">Do they have a welcome message?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'welcome', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'welcome', 'no')">No</button>
-    </div>
-  </div>
-
-  <div class="research-field">
-    <label class="field-label">Message clarity and professionalism</label>
-    <span class="field-hint">Clear and concise? Or walls of text? Typos?</span>
-    <textarea id="clarity" placeholder="e.g., 'Clear and professional', 'Hard to follow, multiple long paragraphs'" onchange="detectIssues()"></textarea>
-  </div>
-
-  <h3 style="margin-top: 16px;">Customer Engagement</h3>
-
-  <div class="research-field">
-    <label class="field-label">Do they ask discovery questions?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'discovery', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'discovery', 'no')">No</button>
-    </div>
-  </div>
-
-  <div class="research-field">
-    <label class="field-label">Do they have a clear CTA (call-to-action)?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'cta', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'cta', 'no')">No</button>
-    </div>
-  </div>
-
-  <h3 style="margin-top: 16px;">Systems & Automation</h3>
-
-  <div class="research-field">
-    <label class="field-label">Do they have quick replies set up?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'quickreplies', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'quickreplies', 'no')">No</button>
-    </div>
-  </div>
-
-  <div class="research-field">
-    <label class="field-label">Do they share a catalogue/price list?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'catalogue', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'catalogue', 'no')">No</button>
-    </div>
-  </div>
-
-  <div class="research-field">
-    <label class="field-label">Do they have an away message set?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'away', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'away', 'no')">No</button>
-    </div>
-  </div>
-
-  <h3 style="margin-top: 16px;">Lead Management</h3>
-
-  <div class="research-field">
-    <label class="field-label">Do they follow up with no-response leads?</label>
-    <div class="yes-no-group">
-      <button class="yes-no-btn" onclick="setYesNo(this, 'followup', 'yes')">Yes</button>
-      <button class="yes-no-btn" onclick="setYesNo(this, 'followup', 'no')">No</button>
-    </div>
-  </div>
-
-  <div class="research-field">
-    <label class="field-label">Overall inbox observations</label>
-    <span class="field-hint">Anything else that stands out?</span>
-    <textarea id="observations" placeholder="Any other observations about their inbox management..."></textarea>
-  </div>
-</div>
-
-<!-- AUTO-DETECTED ISSUES -->
-<div class="card">
-  <span class="section-label">Step 3: Issues Auto-Detected</span>
-  <h3>Review & Include in Audit</h3>
-  <div id="detectedIssues"></div>
-</div>
-
-<!-- CLIENT NOTES -->
-<div class="card">
-  <span class="section-label">Step 4: Additional Notes</span>
-  <textarea id="notes" placeholder="Specific feedback or observations for this client...&#10;&#10;Example: 'Strong at following up, but needs better initial response time'&#10;&#10;Example: 'Perfect opportunity to add catalogue—quick 10 min setup'"></textarea>
-</div>
-
-<!-- BUTTONS -->
-<div class="card">
-  <button class="btn-primary" onclick="generateReport()">📝 Generate WhatsApp Audit</button>
-  <button class="btn-secondary" onclick="copyReport()">📋 Copy Message</button>
-</div>
-
-<!-- REPORT OUTPUT -->
-<div class="card">
-  <h3>Your Audit Message</h3>
-  <div id="report" class="report-box report-empty">Your WhatsApp audit will appear here...</div>
-  <div class="info-box">
-    <strong>✓ Ready to send:</strong> Copy above and paste in WhatsApp. Professional, specific, actionable.
-  </div>
-</div>
-
-</div>
-
-<script>
-const issueDatabase = {
-  'Slow Responses': {
-    desc: 'Takes hours or days to reply. Customers move to competitors.',
-    severity: 'critical'
-  },
-  'Missed Enquiries': {
-    desc: 'Messages go unanswered. Lost opportunities.',
-    severity: 'critical'
-  },
-  'No Welcome Message': {
-    desc: 'First impression is cold and impersonal.',
-    severity: 'major'
-  },
-  'Walls of Text': {
-    desc: 'Long paragraphs overwhelm customers.',
-    severity: 'major'
-  },
-  'Unclear Messaging': {
-    desc: 'Customers don\'t understand products, pricing, or next steps.',
-    severity: 'critical'
-  },
-  'No Clear CTA': {
-    desc: 'Customer doesn\'t know what to do next.',
-    severity: 'critical'
-  },
-  'No Discovery Questions': {
-    desc: 'Doesn\'t understand customer needs. Wrong fits move forward.',
-    severity: 'critical'
-  },
-  'No Follow-Up System': {
-    desc: 'Leads go cold. No second touch.',
-    severity: 'critical'
-  },
-  'No Quick Replies': {
-    desc: 'Manual responses = slow. Common questions aren\'t templated.',
-    severity: 'optimization'
-  },
-  'No Catalogue': {
-    desc: 'Customer asks "what do you offer?" and gets a long message.',
-    severity: 'major'
-  },
-  'No Away Message': {
-    desc: 'Customers don\'t know when they\'ll get a response.',
-    severity: 'optimization'
-  }
-};
-
-const recommendations = {
-  quickWins: [
-    { name: 'Set Up Quick Replies', desc: 'Pre-written answers to common questions. Instant responses. 20 mins.' },
-    { name: 'Create Welcome Message', desc: 'Auto-greet new customers. Professional first impression.' },
-    { name: 'Optimize Profile', desc: 'Add hours, bio, category. Look legit and trustworthy.' },
-    { name: 'Write Response Expectations', desc: 'Tell customers when to expect a reply if you\'re busy.' },
-    { name: 'Create Simple FAQ', desc: '5-10 common questions + answers. Reference in conversations.' }
-  ],
-  strategic: [
-    { name: 'Messaging Sequence', desc: 'Welcome → Discover → Show Solution → CTA → Follow-up. Proven structure.' },
-    { name: 'Product Catalogue', desc: 'Clear pricing/offerings upfront. Filters unqualified leads.' },
-    { name: 'Qualification Framework', desc: 'Ask key questions: budget, timeline, pain point. Only pursue qualified leads.' },
-    { name: 'Follow-Up System', desc: '24-48hr follow-up on no-response leads. Most sales need 2+ touches.' },
-    { name: 'Objection Scripts', desc: 'Write responses for common objections (price, timing, need).' }
-  ],
-  advanced: [
-    { name: 'Conversation Labels', desc: 'Tag chats: Hot Lead, Following Up, Qualified. Quick visibility.' },
-    { name: 'Broadcast Campaigns', desc: 'Send offers to past customers. Re-engage cold leads.' },
-    { name: 'Testimonial Collection', desc: 'Gather case studies. Social proof builds trust fast.' },
-    { name: 'Pipeline Tracking', desc: 'Spreadsheet tracking: Stage, last contact, next action.' }
-  ]
-};
-
-let detectedIssues = [];
-let selectedIssues = [];
-let yesNoAnswers = {};
-
-function setYesNo(btn, key, value) {
-  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  yesNoAnswers[key] = value;
-  detectIssues();
-  saveFormData();
-}
-
-function detectIssues() {
-  detectedIssues = [];
-  selectedIssues = [];
-
-  const respTime = document.getElementById('responseTime').value.toLowerCase();
-  if (respTime.includes('4+') || respTime.includes('8') || respTime.includes('24') || respTime.includes('day')) {
-    detectedIssues.push('Slow Responses');
-  }
-
-  if (yesNoAnswers.unanswered === 'yes') {
-    detectedIssues.push('Missed Enquiries');
-  }
-
-  if (yesNoAnswers.welcome === 'no') {
-    detectedIssues.push('No Welcome Message');
-  }
-
-  const clarity = document.getElementById('clarity').value.toLowerCase();
-  if (clarity.includes('wall') || clarity.includes('long') || clarity.includes('hard') || clarity.includes('confuse')) {
-    detectedIssues.push('Walls of Text');
-  }
-  if (clarity.includes('unclear') || clarity.includes('confus') || clarity.includes('hard')) {
-    detectedIssues.push('Unclear Messaging');
-  }
-
-  if (yesNoAnswers.discovery === 'no') {
-    detectedIssues.push('No Discovery Questions');
-  }
-
-  if (yesNoAnswers.cta === 'no') {
-    detectedIssues.push('No Clear CTA');
-  }
-
-  if (yesNoAnswers.catalogue === 'no') {
-    detectedIssues.push('No Catalogue');
-  }
-
-  if (yesNoAnswers.followup === 'no') {
-    detectedIssues.push('No Follow-Up System');
-  }
-
-  if (yesNoAnswers.quickreplies === 'no') {
-    detectedIssues.push('No Quick Replies');
-  }
-
-  if (yesNoAnswers.away === 'no') {
-    detectedIssues.push('No Away Message');
-  }
-
-  renderDetectedIssues();
-}
-
-function renderDetectedIssues() {
-  const container = document.getElementById('detectedIssues');
-  
-  if (detectedIssues.length === 0) {
-    container.innerHTML = '<div class="no-issues-detected">✓ No major issues detected. Great inbox!</div>';
-    return;
-  }
-
-  container.innerHTML = detectedIssues.map(issue => {
-    const data = issueDatabase[issue] || { desc: '', severity: 'major' };
-    return `
-      <div class="issue-item" onclick="toggleIssueSelection(this, '${issue}')">
-        <input type="checkbox" onchange="this.parentElement.classList.toggle('active')">
-        <div class="issue-content">
-          <span class="issue-title">${issue}</span>
-          <span class="issue-desc">${data.desc}</span>
-          <span class="severity-badge severity-${data.severity}">${data.severity}</span>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function toggleIssueSelection(el, issue) {
-  const checkbox = el.querySelector('input[type="checkbox"]');
-  checkbox.checked = !checkbox.checked;
-  el.classList.toggle('active');
-  
-  if (checkbox.checked) {
-    if (!selectedIssues.includes(issue)) selectedIssues.push(issue);
-  } else {
-    selectedIssues = selectedIssues.filter(i => i !== issue);
-  }
-  saveFormData();
-}
-
-function generateReport() {
-  const client = document.getElementById('clientName').value || 'there';
-  const business = document.getElementById('businessName').value || 'your business';
-  const industry = document.getElementById('industry').value || 'your industry';
-  const notes = document.getElementById('notes').value;
-
-  if (selectedIssues.length === 0 && detectedIssues.length > 0) {
-    alert('Select at least one issue to include in the audit.');
-    return;
-  }
-
-  let selectedRecs = [];
-  if (selectedIssues.includes('Slow Responses') || selectedIssues.includes('Missed Enquiries')) {
-    selectedRecs.push(recommendations.quickWins[0]);
-  }
-  if (selectedIssues.includes('No Welcome Message')) {
-    selectedRecs.push(recommendations.quickWins[1]);
-  }
-  if (selectedIssues.includes('Walls of Text') || selectedIssues.includes('Unclear Messaging')) {
-    selectedRecs.push(recommendations.strategic[0]);
-  }
-  if (selectedIssues.includes('No Discovery Questions')) {
-    selectedRecs.push(recommendations.strategic[2]);
-  }
-  if (selectedIssues.includes('No Clear CTA')) {
-    selectedRecs.push(recommendations.strategic[0]);
-  }
-  if (selectedIssues.includes('No Catalogue')) {
-    selectedRecs.push(recommendations.strategic[1]);
-  }
-  if (selectedIssues.includes('No Follow-Up System')) {
-    selectedRecs.push(recommendations.strategic[3]);
-  }
-  if (selectedIssues.includes('No Quick Replies')) {
-    selectedRecs.push(recommendations.quickWins[0]);
-  }
-
-  selectedRecs = [...new Set(selectedRecs.map(r => r.name))].map(name => recommendations.quickWins.concat(recommendations.strategic, recommendations.advanced).find(r => r.name === name));
-
-  const issueText = selectedIssues.map(issue => {
-    const data = issueDatabase[issue] || { desc: '' };
-    return `• ${issue}\n  ${data.desc}`;
-  }).join('\n\n');
-
-  const recText = selectedRecs.slice(0, 5).map(r => `• ${r.name}\n  ${r.desc}`).join('\n\n');
-
-  const severity = selectedIssues.some(i => issueDatabase[i]?.severity === 'critical') ? 'critical' : 'major';
-  const urgency = severity === 'critical' 
-    ? 'These aren\'t small tweaks—they\'re costing you sales RIGHT NOW.'
-    : 'Small changes could make a big difference to your bottom line.';
-
-  const report = `Hi ${client}! 👋
-
-I reviewed the WhatsApp inbox for ${business} and spotted some opportunities.
-
-📊 WHAT I FOUND:
-
-${issueText}
-
-${urgency}
-
-💡 MY RECOMMENDATION:
-
-Start here (this week):
-
-${recText}
-
-${notes ? `\n📝 SPECIFIC NOTES FOR ${business.toUpperCase()}:\n\n${notes}` : ''}
-
-This is the revenue leakage point. Fix these and you'll see:
-✓ Faster response time
-✓ Clearer customer journey
-✓ More conversions
-✓ Less stress managing inbox
-
-Most of these take 30-60 mins to implement. Big impact.
-
-Ready to set it up? Let me know.
-
-Cheers,
-Inbox Aide SA
-
-P.S. — 20-40% of potential sales are lost because businesses either respond too slow or aren't clear enough. You're already ahead by getting this audit. 💪`;
-
-  document.getElementById('report').textContent = report;
-  document.getElementById('report').classList.remove('report-empty');
-  saveFormData();
-}
-
-function copyReport() {
-  const text = document.getElementById('report').textContent;
-  if (text.includes('Your WhatsApp audit')) {
-    alert('Generate an audit first!');
-    return;
-  }
-  
-  // Try modern clipboard API first
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('✓ Copied! Paste in WhatsApp now.');
-    }).catch(() => {
-      fallbackCopy(text);
-    });
-  } else {
-    fallbackCopy(text);
-  }
-}
-
-function fallbackCopy(text) {
-  // Create temporary textarea
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.style.position = 'fixed';
-  textarea.style.opacity = '0';
-  document.body.appendChild(textarea);
-  textarea.select();
-  
-  try {
-    document.execCommand('copy');
-    alert('✓ Copied! Paste in WhatsApp now.');
-  } catch (err) {
-    alert('Copy failed. Tap the message box, select text, then copy manually.');
-  }
-  
-  document.body.removeChild(textarea);
-}
-
-function saveFormData() {
-  const data = {
-    clientName: document.getElementById('clientName').value,
-    businessName: document.getElementById('businessName').value,
-    industry: document.getElementById('industry').value,
-    responseTime: document.getElementById('responseTime').value,
-    clarity: document.getElementById('clarity').value,
-    observations: document.getElementById('observations').value,
-    notes: document.getElementById('notes').value,
-    yesNoAnswers: yesNoAnswers,
-    selectedIssues: selectedIssues,
-    report: document.getElementById('report').textContent
-  };
-  localStorage.setItem('auditData', JSON.stringify(data));
-}
-
-function loadFormData() {
-  const saved = localStorage.getItem('auditData');
-  if (saved) {
-    const data = JSON.parse(saved);
-    document.getElementById('clientName').value = data.clientName || '';
-    document.getElementById('businessName').value = data.businessName || '';
-    document.getElementById('industry').value = data.industry || '';
-    document.getElementById('responseTime').value = data.responseTime || '';
-    document.getElementById('clarity').value = data.clarity || '';
-    document.getElementById('observations').value = data.observations || '';
-    document.getElementById('notes').value = data.notes || '';
-    yesNoAnswers = data.yesNoAnswers || {};
-    
-    if (data.report && !data.report.includes('Your WhatsApp audit')) {
-      document.getElementById('report').textContent = data.report;
-      document.getElementById('report').classList.remove('report-empty');
-    }
-    
-    detectIssues();
-  }
-}
-
-document.addEventListener('input', saveFormData);
-document.addEventListener('change', saveFormData);
-window.addEventListener('load', loadFormData);
-</script>
-
+    <script>
+        // Show success/error after Formspree submission
+        const form = document.getElementById('auditForm');
+        const success = document.getElementById('formSuccess');
+        const error = document.getElementById('formError');
+        const slotCount = document.getElementById('slotCount');
+
+        // Load saved slot count from localStorage
+        let slots = parseInt(localStorage.getItem('auditSlots') ?? '3');
+        slotCount.textContent = slots;
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = form.querySelector('button[type="submit"]');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            try {
+                const data = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // Decrease slot counter
+                    if (slots > 0) {
+                        slots--;
+                        localStorage.setItem('auditSlots', slots);
+                        slotCount.textContent = slots;
+                    }
+                    form.style.display = 'none';
+                    success.style.display = 'block';
+                } else {
+                    error.style.display = 'block';
+                    btn.textContent = 'Reserve Your Slot';
+                    btn.disabled = false;
+                }
+            } catch(err) {
+                error.style.display = 'block';
+                btn.textContent = 'Reserve Your Slot';
+                btn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
